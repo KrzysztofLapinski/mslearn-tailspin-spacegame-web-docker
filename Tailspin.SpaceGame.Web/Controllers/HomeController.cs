@@ -16,14 +16,16 @@ namespace TailSpin.SpaceGame.Web.Controllers
         private readonly IDocumentDBRepository<Score> _scoreRepository;
         // User profile repository.
         private readonly IDocumentDBRepository<Profile> _profileRespository;
+        private readonly IConfiguration _configuration;
 
         public HomeController(
             IDocumentDBRepository<Score> scoreRepository,
-            IDocumentDBRepository<Profile> profileRespository
-            )
+            IDocumentDBRepository<Profile> profileRespository,
+            IConfiguration configuration)
         {
             _scoreRepository = scoreRepository;
             _profileRespository = profileRespository;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index(
@@ -33,12 +35,7 @@ namespace TailSpin.SpaceGame.Web.Controllers
             string region = ""
             )
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Environment.CurrentDirectory)
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.json", true)
-                .Build();
-            var configurationTest = configuration["TitleValue"];
+            var configurationTest = _configuration["TitleValue"];
             // Create the view model with initial values we already know.
             var vm = new LeaderboardViewModel
             {
