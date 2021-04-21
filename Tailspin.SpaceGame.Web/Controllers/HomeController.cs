@@ -35,6 +35,7 @@ namespace TailSpin.SpaceGame.Web.Controllers
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Environment.CurrentDirectory)
+                .AddEnvironmentVariables()
                 .AddJsonFile("appsettings.json", true)
                 .Build();
             var configurationTest = configuration["TitleValue"];
