@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TailSpin.SpaceGame.Web.Models;
 
 namespace TailSpin.SpaceGame.Web.Controllers
@@ -32,6 +33,11 @@ namespace TailSpin.SpaceGame.Web.Controllers
             string region = ""
             )
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("appsettings.json", true)
+                .Build();
+            var configurationTest = configuration["TitleValue"];
             // Create the view model with initial values we already know.
             var vm = new LeaderboardViewModel
             {
@@ -44,7 +50,8 @@ namespace TailSpin.SpaceGame.Web.Controllers
                 {
                     "Solo",
                     "Duo",
-                    "Trio"
+                    "Trio",
+                    configurationTest ?? string.Empty
                 },
 
                     GameRegions = new List<string>()
